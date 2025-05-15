@@ -1,4 +1,2 @@
-*.pkl
 *.h5
-*.jpeg
 __pycache__/
