@@ -18,11 +18,6 @@ st.markdown("Provide the environmental and soil details below to get a recommend
 
 # Updated example inputs
 examples = {
-    "Example 1 (Maize)": [90, 42, 43, 23.0, 82.0, 6.5, 220.0, 42.0],
-    "Example 2 (Rice)": [105, 40, 60, 29.5, 90.0, 5.8, 250.0, 70.0],
-    "Example 3 (Coffee)": [80, 35, 50, 22.0, 65.0, 6.0, 300.0, 45.0],
-    "Example 4 (Banana)": [120, 60, 80, 30.0, 85.0, 6.0, 280.0, 60.0],
-    "Example 5 (Potato)": [25, 15, 20, 20.0, 55.0, 6.2, 150.0, 35.0],
     
     "User Example 1": [42, 79, 85, 17.223852, 15.820693, 6.129534, 76.575810, 36.636172],
     "User Example 2": [43, 80, 85, 17.223852, 15.0, 7.129534, 76.0, 35.636172],
