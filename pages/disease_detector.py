@@ -7,44 +7,23 @@ import json
 import os
 import requests
 
-# ✅ Robust Google Drive downloader with token support
-def download_model_from_drive(file_id, dest_path):
-    URL = "https://drive.google.com/uc?export=download"
-    session = requests.Session()
-    response = session.get(URL, params={'id': file_id}, stream=True)
+# ✅ Download from Hugging Face
+def download_model_from_url(url, destination):
+    response = requests.get(url)
+    with open(destination, "wb") as f:
+        f.write(response.content)
 
-    def get_confirm_token(response):
-        for key, value in response.cookies.items():
-            if key.startswith('download_warning'):
-                return value
-        return None
-
-    token = get_confirm_token(response)
-    if token:
-        params = {'id': file_id, 'confirm': token}
-        response = session.get(URL, params=params, stream=True)
-
-    with open(dest_path, "wb") as f:
-        for chunk in response.iter_content(32768):
-            if chunk:
-                f.write(chunk)
-
-# 📍 Model location and Drive ID
+# 📍 Model location and URL
 model_path = "models/plant_disease/plant_disease_model.h5"
-file_id = "1BHlkeVUp2ieawY4X8-hPqBPC6xK2srV1"  # 👈 Replace with your own if needed
+model_url = "https://huggingface.co/datasets/Akram-11/plant-disease-model/resolve/main/plant_disease_model.h5"
 
-# ⬇️ Download if missing and validate
+# ⬇️ Download if missing
 if not os.path.exists(model_path):
-    st.info("Downloading model from Google Drive... Please wait ⏳")
+    st.info("Downloading model from Hugging Face... ⏳")
     os.makedirs(os.path.dirname(model_path), exist_ok=True)
-    download_model_from_drive(file_id, model_path)
+    download_model_from_url(model_url, model_path)
 
-    # ❗ Validate file size to detect failure
-    if os.path.getsize(model_path) < 100_000:  # <100 KB = likely HTML error page
-        st.error("❌ Model download failed. Please check the Google Drive link or quota.")
-        st.stop()
-
-# ✅ Load the model
+# ✅ Load model
 model = load_model(model_path, compile=False)
 
 # ✅ Load class index mapping
