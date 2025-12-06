@@ -49,11 +49,12 @@ st.header("🦠 Plant Disease Detection")
 uploaded_file = st.file_uploader("Upload a plant leaf image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
-    # Load and preprocess image
-    img = Image.open(uploaded_file).resize((224, 224))
+    # Ensure image is RGB and correct size
+    img = Image.open(uploaded_file).convert("RGB").resize((224, 224))
     st.image(img, caption="Uploaded Image", use_container_width=True)
 
     img_array = np.expand_dims(np.array(img) / 255.0, axis=0)
+    st.write("Input shape:", img_array.shape)  # Optional: debug
 
     # Make prediction
     preds = model.predict(img_array)
